@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Excel parser</title>
+    <link rel="stylesheet" href="{% static 'parser/css/style.css' %}">
+</head>
+<body>
+<div class="wrapper">
+    <div class="main-content">
+        <div class="header">
+            <h1>Excel Parser</h1>
+        </div>
+        <div class="form-data">
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="data-select">
+                    <div class="form-label">
+                        {{ form.date_1.label }}
+                    </div>
+                    <div class="error">
+                        {{ form.date_1.errors }}
+                    </div>
+                    <div>
+                        {{ form.date_1 }}
+                    </div>
+                    <div class="form-label">
+                        {{ form.date_2.label }}
+                    </div>
+                    <div class="error">
+                        {{ form.date_2.errors }}
+                    </div>
+                    <div>
+                        {{ form.date_2 }}
+                    </div>
+                </div>
+                <div class="form-data">
+                    {{ test }}
+                    <div>
+                        <button type="submit" name="info">Показать текущую информацию</button>
+                    </div>
+                    <p>или</p>
+                    <div class="error">
+                        {{ form.file.errors }}
+                    </div>
+                    <div>
+                        {{ form.file }}
+                    </div>
+                    <div>
+                        <button type="submit" name="upload">Загрузить Excel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

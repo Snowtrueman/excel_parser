@@ -1,0 +1,23 @@
+version: '3.3'
+
+services:
+  web:
+    build: ./excel_parser
+    command: gunicorn excel_parser.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ./db/db/:/usr/src/app/db/
+      - static_volume:/usr/src/app/static/
+    expose:
+      - 8000
+
+  nginx:
+    build: ./nginx
+    ports:
+      - 8080:80
+    volumes:
+      - static_volume:/usr/src/app/static/
+    depends_on:
+      - web
+
+volumes:
+  static_volume:

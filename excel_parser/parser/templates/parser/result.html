@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Excel parser results</title>
+    <link rel="stylesheet" href="{% static 'parser/css/style.css' %}">
+</head>
+<body>
+<div class="wrapper">
+    <div class="main-content">
+        {% if data %}
+            <table class="result_table">
+                <tbody>
+                <tr>
+                    <th colspan="1" rowspan="3">Id</th>
+                    <th colspan="1" rowspan="3">Company</th>
+                    <th colspan="4" rowspan="1">Fact</th>
+                    <th colspan="4" rowspan="1">Forecast</th>
+                </tr>
+                <tr>
+                    <th colspan="2" rowspan="1">Qliq</th>
+                    <th colspan="2" rowspan="1">Qoil</th>
+                    <th colspan="2" rowspan="1">Qliq</th>
+                    <th colspan="2" rowspan="1">Qoil</th>
+                </tr>
+                <tr>
+                    <th>{{ request.GET.date_1 }}</th>
+                    <th>{{ request.GET.date_2 }}</th>
+                    <th>{{ request.GET.date_1 }}</th>
+                    <th>{{ request.GET.date_2 }}</th>
+                    <th>{{ request.GET.date_1 }}</th>
+                    <th>{{ request.GET.date_2 }}</th>
+                    <th>{{ request.GET.date_1 }}</th>
+                    <th>{{ request.GET.date_2 }}</th>
+                </tr>
+                {% for row in data %}
+                    <tr>
+                        <td>{{ row.company_id }}</td>
+                        <td>{{ row.company_name }}</td>
+                        <td>{{ row.fact_qliq_date_1 }}</td>
+                        <td>{{ row.fact_qliq_date_2 }}</td>
+                        <td>{{ row.fact_qoil_date_1 }}</td>
+                        <td>{{ row.fact_qoil_date_2 }}</td>
+                        <td>{{ row.forecast_qliq_date_1 }}</td>
+                        <td>{{ row.forecast_qliq_date_2 }}</td>
+                        <td>{{ row.forecast_qoil_date_1 }}</td>
+                        <td>{{ row.forecast_qoil_date_2 }}</td>
+                    </tr>
+                {% endfor %}
+                {% if aggregated_data %}
+                    <tr class="summary">
+                        <td colspan="2">Итого</td>
+                        <td>{{ aggregated_data.fact_qliq_date_1.sum }}</td>
+                        <td>{{ aggregated_data.fact_qliq_date_2.sum }}</td>
+                        <td>{{ aggregated_data.fact_qoil_date_1.sum }}</td>
+                        <td>{{ aggregated_data.fact_qoil_date_2.sum }}</td>
+                        <td>{{ aggregated_data.forecast_qliq_date_1.sum }}</td>
+                        <td>{{ aggregated_data.forecast_qliq_date_2.sum }}</td>
+                        <td>{{ aggregated_data.forecast_qoil_date_1.sum }}</td>
+                        <td>{{ aggregated_data.forecast_qoil_date_2.sum }}</td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
+        {% else %}
+            <h3>Данные, соответствующие указанным параметрам не найдены</h3>
+        {% endif %}
+        <div class="back">
+            <a href="{% url 'main' %}">Назад</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
